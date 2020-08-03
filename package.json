@@ -1,0 +1,23 @@
+{
+  "name": "drawtheline",
+  "description": "Sketch simple line drawing in SVG.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "drawing",
+    "svg"
+  ],
+  "authors": [
+    {
+      "name": "Scott Doxey",
+      "email": "hello@scottdoxey.com",
+      "homepage": "http://scottdoxey.com/"
+    }
+  ],
+  "homepage": "https://github.com/neogeek/drawtheline",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/neogeek/drawtheline.git"
+  }
+}
