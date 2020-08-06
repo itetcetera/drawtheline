@@ -96,3 +96,9 @@ export const inputUpEvent = e => {
     svg.removeEventListener('mousemove', inputMoveEvent);
     svg.removeEventListener('touchmove', inputMoveEvent);
 };
+
+export const clear = svg => {
+    history.splice(0, history.length);
+
+    svg.querySelectorAll('path').forEach(path => svg.removeChild(path));
+};
