@@ -40,7 +40,53 @@ if (!config[_lineWidth]) {
     config[_lineWidth] = config.minLineWidth;
 }
 
-export const history = [];
+const _items = Symbol('_items');
+
+export const history = {
+    [_items]: [],
+    maxHistoryCount: 100,
+    clear() {
+        this[_items].splice(0, this[_items].length);
+
+        localStorage.removeItem('history');
+    },
+    last() {
+        return this[_items][this[_items].length - 1];
+    },
+    pop() {
+        const item = this[_items].pop();
+
+        this.store();
+
+        return item;
+    },
+    push(item) {
+        this[_items].push(item);
+
+        this[_items].splice(
+            0,
+            Math.max(this[_items].length - this.maxHistoryCount, 0)
+        );
+
+        this.store();
+    },
+    restore() {
+        var storedHistory = localStorage.getItem('history');
+
+        if (storedHistory) {
+            try {
+                this[_items] = JSON.parse(storedHistory);
+            } catch (err) {
+                this.clear();
+            }
+        }
+    },
+    store() {
+        localStorage.setItem('history', JSON.stringify(this[_items]));
+    }
+};
+
+history.restore();
 
 const createPath = (coords, lineColor, lineWidth) => {
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -97,8 +143,6 @@ export const inputDownEvent = e => {
 
     const path = createPath(coords, config.lineColor, config.lineWidth);
 
-    history[history.length] = { path, coords };
-
     svg.appendChild(path);
 
     if (e.touches) {
@@ -116,6 +160,13 @@ export const inputUpEvent = e => {
 
     const svg = e.target.closest('svg');
 
+    history.push(
+        [].slice
+            .call(svg.querySelectorAll('path'))
+            .map(path => path.outerHTML)
+            .join('')
+    );
+
     if (e.touches) {
         svg.removeEventListener('touchmove', inputMoveEvent);
         svg.removeEventListener('touchend', inputUpEvent);
@@ -127,7 +178,7 @@ export const inputUpEvent = e => {
 };
 
 export const clear = svg => {
-    history.splice(0, history.length);
+    history.clear();
 
     svg.querySelectorAll('path').forEach(path => svg.removeChild(path));
 };
