@@ -1,7 +1,8 @@
 # Changelog
 
-## [HEAD] - 2020-08-07
+## [HEAD] - 2020-08-08
 
+- [hotfix] Improved event handling on desktop and mobile devices [#6](https://github.com/neogeek/drawtheline/pull/6)
 - [feat] Added createPath method. [#4](https://github.com/neogeek/drawtheline/pull/4)
 - [feat] Expose default line color, min and max line width config values. [#3](https://github.com/neogeek/drawtheline/pull/3)
 - [hotfix] Changed line color and width to private properties. [#2](https://github.com/neogeek/drawtheline/pull/2)
