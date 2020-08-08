@@ -3,28 +3,35 @@ const defaultLineColor = '#0064FF';
 const minLineWidth = 2;
 const maxLineWidth = 20;
 
+const _lineColor = Symbol('_lineColor');
+const _lineWidth = Symbol('_lineWidth');
+
 export const config = {
-    _lineColor: localStorage.getItem('lineColor') || defaultLineColor,
+    [_lineColor]: localStorage.getItem('lineColor') || defaultLineColor,
     get lineColor() {
-        return this._lineColor;
+        return this[_lineColor];
     },
     set lineColor(value) {
-        this._lineColor = value;
+        this[_lineColor] = value;
 
-        localStorage.setItem('lineColor', this._lineColor);
+        localStorage.setItem('lineColor', this[_lineColor]);
 
-        return this._lineColor;
+        return this[_lineColor];
     },
-    _lineWidth: parseInt(localStorage.getItem('lineWidth'), 10) || minLineWidth,
+    [_lineWidth]:
+        parseInt(localStorage.getItem('lineWidth'), 10) || minLineWidth,
     get lineWidth() {
-        return this._lineWidth;
+        return this[_lineWidth];
     },
     set lineWidth(value) {
-        this._lineWidth = Math.min(Math.max(value, minLineWidth), maxLineWidth);
+        this[_lineWidth] = Math.min(
+            Math.max(value, minLineWidth),
+            maxLineWidth
+        );
 
-        localStorage.setItem('lineWidth', this._lineWidth);
+        localStorage.setItem('lineWidth', this[_lineWidth]);
 
-        return this._lineWidth;
+        return this[_lineWidth];
     }
 };
 
