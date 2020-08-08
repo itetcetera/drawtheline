@@ -28,9 +28,5 @@ import { inputDownEvent, inputUpEvent } from 'drawtheline';
 const svg = document.querySelector('svg');
 
 svg.addEventListener('mousedown', inputDownEvent);
-svg.addEventListener('mouseup', inputUpEvent);
-svg.addEventListener('mouseleave', inputUpEvent);
-
 svg.addEventListener('touchstart', inputDownEvent);
-svg.addEventListener('touchend', inputUpEvent);
 ```

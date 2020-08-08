@@ -60,18 +60,16 @@ export const inputMoveEvent = e => {
 
     e.preventDefault();
 
-    if (e.touches) {
-        e = e.touches[0];
-    }
+    const { target, pageX, pageY } = e.touches ? e.touches[0] : e;
 
-    const svg = e.target.closest('svg');
+    const svg = target.closest('svg');
 
     const { top, left } = svg.getBoundingClientRect();
 
     const item = history[history.length - 1];
 
-    item.coords = `${item.coords} L${e.pageX - (left + window.pageXOffset)} ${
-        e.pageY - (top + window.pageYOffset)
+    item.coords = `${item.coords} L${pageX - (left + window.pageXOffset)} ${
+        pageY - (top + window.pageYOffset)
     }`;
 
     item.path.setAttribute('d', item.coords);
@@ -84,16 +82,14 @@ export const inputDownEvent = e => {
 
     e.preventDefault();
 
-    if (e.touches) {
-        e = e.touches[0];
-    }
+    const { target, pageX, pageY } = e.touches ? e.touches[0] : e;
 
-    const svg = e.target.closest('svg');
+    const svg = target.closest('svg');
 
     const { top, left } = svg.getBoundingClientRect();
 
-    const coords = `M${e.pageX - (left + window.pageXOffset)} ${
-        e.pageY - (top + window.pageYOffset)
+    const coords = `M${pageX - (left + window.pageXOffset)} ${
+        pageY - (top + window.pageYOffset)
     }`;
 
     const path = createPath(coords, config.lineColor, config.lineWidth);
@@ -102,8 +98,14 @@ export const inputDownEvent = e => {
 
     svg.appendChild(path);
 
-    svg.addEventListener('mousemove', inputMoveEvent);
-    svg.addEventListener('touchmove', inputMoveEvent);
+    if (e.touches) {
+        svg.addEventListener('touchmove', inputMoveEvent);
+        svg.addEventListener('touchend', inputUpEvent);
+    } else {
+        svg.addEventListener('mousemove', inputMoveEvent);
+        svg.addEventListener('mouseup', inputUpEvent);
+        svg.addEventListener('mouseleave', inputUpEvent);
+    }
 };
 
 export const inputUpEvent = e => {
@@ -111,8 +113,14 @@ export const inputUpEvent = e => {
 
     const svg = e.target.closest('svg');
 
-    svg.removeEventListener('mousemove', inputMoveEvent);
-    svg.removeEventListener('touchmove', inputMoveEvent);
+    if (e.touches) {
+        svg.removeEventListener('touchmove', inputMoveEvent);
+        svg.removeEventListener('touchend', inputUpEvent);
+    } else {
+        svg.removeEventListener('mousemove', inputMoveEvent);
+        svg.removeEventListener('mouseup', inputUpEvent);
+        svg.removeEventListener('mouseleave', inputUpEvent);
+    }
 };
 
 export const clear = svg => {
