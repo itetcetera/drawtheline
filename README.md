@@ -29,6 +29,6 @@ const svg = document.querySelector('svg');
 
 svg.addEventListener('mousedown', inputDownEvent);
 svg.addEventListener('touchstart', inputDownEvent);
-svg.removeEventListener('mouseup', inputUpEvent);
-svg.removeEventListener('touchend', inputUpEvent);
+svg.addEventListener('mouseup', inputUpEvent);
+svg.addEventListener('touchend', inputUpEvent);
 ```
