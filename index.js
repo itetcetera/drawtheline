@@ -42,6 +42,17 @@ if (!config[_lineWidth]) {
 
 export const history = [];
 
+const createPath = (coords, lineColor, lineWidth) => {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+    path.setAttribute('d', coords);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', lineColor);
+    path.setAttribute('stroke-width', lineWidth);
+
+    return path;
+};
+
 export const inputMoveEvent = e => {
     if (e.touches && e.touches.length > 1) {
         return;
@@ -81,20 +92,15 @@ export const inputDownEvent = e => {
 
     const { top, left } = svg.getBoundingClientRect();
 
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-
     const coords = `M${e.pageX - (left + window.pageXOffset)} ${
         e.pageY - (top + window.pageYOffset)
     }`;
 
+    const path = createPath(coords, config.lineColor, config.lineWidth);
+
     history[history.length] = { path, coords };
 
     svg.appendChild(path);
-
-    path.setAttribute('d', coords);
-    path.setAttribute('fill', 'none');
-    path.setAttribute('stroke', config.lineColor);
-    path.setAttribute('stroke-width', config.lineWidth);
 
     svg.addEventListener('mousemove', inputMoveEvent);
     svg.addEventListener('touchmove', inputMoveEvent);
