@@ -66,13 +66,16 @@ export const inputMoveEvent = e => {
 
     const { top, left } = svg.getBoundingClientRect();
 
-    const item = history[history.length - 1];
+    const path = svg.querySelector('path:last-of-type');
 
-    item.coords = `${item.coords} L${pageX - (left + window.pageXOffset)} ${
-        pageY - (top + window.pageYOffset)
-    }`;
+    const coords = path.getAttribute('d');
 
-    item.path.setAttribute('d', item.coords);
+    path.setAttribute(
+        'd',
+        `${coords} L${pageX - (left + window.pageXOffset)} ${
+            pageY - (top + window.pageYOffset)
+        }`
+    );
 };
 
 export const inputDownEvent = e => {
