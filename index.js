@@ -1,13 +1,11 @@
-const defaultLineColor = '#0064FF';
-
-const minLineWidth = 2;
-const maxLineWidth = 20;
-
 const _lineColor = Symbol('_lineColor');
 const _lineWidth = Symbol('_lineWidth');
 
 export const config = {
-    [_lineColor]: localStorage.getItem('lineColor') || defaultLineColor,
+    defaultLineColor: '#0064FF',
+    minLineWidth: 2,
+    maxLineWidth: 20,
+    [_lineColor]: localStorage.getItem('lineColor'),
     get lineColor() {
         return this[_lineColor];
     },
@@ -18,15 +16,14 @@ export const config = {
 
         return this[_lineColor];
     },
-    [_lineWidth]:
-        parseInt(localStorage.getItem('lineWidth'), 10) || minLineWidth,
+    [_lineWidth]: parseInt(localStorage.getItem('lineWidth'), 10),
     get lineWidth() {
         return this[_lineWidth];
     },
     set lineWidth(value) {
         this[_lineWidth] = Math.min(
-            Math.max(value, minLineWidth),
-            maxLineWidth
+            Math.max(value, this.minLineWidth),
+            this.maxLineWidth
         );
 
         localStorage.setItem('lineWidth', this[_lineWidth]);
@@ -34,6 +31,14 @@ export const config = {
         return this[_lineWidth];
     }
 };
+
+if (!config[_lineColor]) {
+    config[_lineColor] = config.defaultLineColor;
+}
+
+if (!config[_lineWidth]) {
+    config[_lineWidth] = config.minLineWidth;
+}
 
 export const history = [];
 
