@@ -11,12 +11,12 @@ $ npm install drawtheline
 ```
 
 ```javascript
-<script type="module" src="https://unpkg.com/drawtheline@1.0.0/index.js"></script>
+<script type="module" src="https://unpkg.com/drawtheline@1.1.0/index.js"></script>
 <script>
 import {
     inputDownEvent,
     inputUpEvent
-} from 'https://unpkg.com/drawtheline@1.0.0/index.js';
+} from 'https://unpkg.com/drawtheline@1.1.0/index.js';
 </script>
 ```
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## [HEAD] - 2020-08-08
+## [v1.1.0] - 2020-08-08
 
 - [feat] History improvements [#7](https://github.com/neogeek/drawtheline/pull/7)
 - [hotfix] Improved event handling on desktop and mobile devices [#6](https://github.com/neogeek/drawtheline/pull/6)
