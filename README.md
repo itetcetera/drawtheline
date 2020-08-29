@@ -12,7 +12,7 @@ $ npm install drawtheline
 
 ```javascript
 <script type="module" src="https://unpkg.com/drawtheline@1.1.0/index.js"></script>
-<script>
+<script type="module">
 import {
     inputDownEvent,
     inputUpEvent
